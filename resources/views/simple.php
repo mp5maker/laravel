@@ -9,6 +9,7 @@
     <script src="main.js"></script> -->
 </head>
 <body>
-    <p> Welcome to the index page</p>
+    <p> Welcome to the category page</p>
+    <?php if(isset($some_data)) echo $some_data ?>
 </body>
 </html>

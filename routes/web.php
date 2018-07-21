@@ -92,3 +92,164 @@ Route::get('blade/template', function(){
 Route::get('blade/inheritance', function(){
     return View::make('child');
 });
+
+Route::get('/simpleform', function(){
+    return View::make('form');
+});
+
+// Route::get('/dumpdata', function(){
+//     $data = Request::all();
+//     echo "<pre>";
+//     var_dump($data);
+// });
+
+// Route::get('/dumpdata', function(){
+//     $data = Request::get('foo', 'war');
+//     echo "<pre>";
+//     var_dump($data);
+// });
+
+// Route::get("/dumpdata", function(){
+//     $data = Request::has('foo');
+//     var_dump($data);
+// });
+
+// Route::get("/dumpdata", function(){
+//     $data = Request::only('foo');
+//     var_dump($data);
+// });
+
+// Route::get('/dumpdata', function(){
+//     $data = Request::except('baz');
+//     var_dump($data);
+// });
+
+// Route::get('/dumpdata', function(){
+//     return Redirect::to('/new/request');
+// });
+
+// Route::get('/new/request', function(){
+//     $data = Request::all();
+//     echo "<pre>";
+//     var_dump($data);
+// });
+
+// Route::get('/dumpdata', function(){
+//     Request::flash();
+//     return Redirect::to('/new/request');
+// });
+
+// Route::get('/dumpdata', function(){
+//     Request::flashOnly('foo');
+//     return Redirect::to('/new/request');
+// });
+
+// Route::get('/dumpdata', function(){
+//     Request::flashExcept('foo');
+//     return Redirect::to('/new/request');
+// });
+
+// Route::get('/dumpdata', function(){
+//     return Redirect::to('/new/request')->withInput();
+// });
+
+// Route::get('/dumpdata', function(){
+//     return Redirect::to('/new/request')->withInput(Request::only('foo'));
+// });
+
+Route::get('/dumpdata', function(){
+    return Redirect::to('/new/request')->withInput(Request::except('foo'));
+});
+
+Route::get('/new/request', function(){
+    $data = Request::old();
+    echo "<pre>";
+    var_dump($data);
+});
+
+Route::get('/postform', function(){
+    return View::make('postform');
+});
+
+Route::post('/dumppostdata', function(){
+    $data = Request::all();
+    echo "<pre>";
+    var_dump($data);
+});
+
+Route::get('/fileupload', function(){
+    return View::make('fileupload');
+});
+
+// Route::post('/filepost', function(){
+//     echo "<pre>";
+//     var_dump(Request::file('upload')->getClientOriginalName()); 
+// });
+
+// Route::post('/filepost', function(){
+//     echo "<pre>";
+//     var_dump(Request::file('upload')->getFileName()); 
+// });
+
+// Route::post('/filepost', function(){
+//     echo "<pre>";
+//     var_dump(Request::file('upload')->getClientSize()); 
+// });
+
+// Route::post('/filepost', function(){
+//     echo "<pre>";
+//     var_dump(Request::file('upload')->getClientSize()); 
+// });
+
+// Route::post('/filepost', function(){
+//     echo "<pre>";
+//     var_dump(Request::file('upload')->getMimeType()); 
+// });
+
+// Route::post('/filepost', function(){
+//     echo "<pre>";
+//     var_dump(Request::file('upload')->guessExtension()); 
+// });
+
+// Route::post('/filepost', function(){
+//     echo "<pre>";
+//     var_dump(Request::file('upload')->getRealPath()); 
+// });
+
+Route::post('/filepost', function(){
+    $name = Request::file('upload')->getClientOriginalName();
+    Request::file('upload')->move($_SERVER['DOCUMENT_ROOT'].'/laravel/storage/directory/', $name);
+    return "File was moved";
+});
+
+
+// Route::get('/createcookie', function(){
+//     $cookie = Cookie::make('username', 'khan.photon', 30);
+//     return Response::make('/readcookie')->withCookie($cookie);
+// });
+
+// Route::get('/createcookie', function(){
+//     $cookie = Cookie::forever('username', 'khan.photon');
+//     return Response::make('/readcookie')->withCookie($cookie);
+// });
+
+Route::get('/createcookie', function(){
+    $cookie = Cookie::forget('username');
+    return $cookie;
+});
+
+// Route::get('/readcookie', function(){
+//     $cookie = Cookie::get('username');
+//     var_dump($cookie);
+// });
+
+// Route::get('/readcookie', function(){
+//     $cookie = Cookie::has('username');
+//     var_dump($cookie);
+// });
+
+Route::get('/readcookie', function(){
+    $cookie = Cookie::get('username');
+    var_dump($cookie);
+});
+

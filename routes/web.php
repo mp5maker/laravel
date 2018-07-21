@@ -326,4 +326,7 @@ Route::group(["prefix" => "books"], function(){
     });
 });
 
-
+Route::group(['prefix' => "article"], function(){
+    Route::get('/', 'ArticleController@index');
+    Route::get('/new', 'ArticleController@new');
+});

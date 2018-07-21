@@ -11,6 +11,18 @@
 |
 */
 
+// Route::group(["domain" => "admin.localhost"], function(){
+//     Route::get('/my/route', function(){
+//         return "Sub Domain Page";
+//     });
+// });
+
+// Route::group(["domain" => "{user}.admin.localhost:8000"], function(){
+//     Route::get('profile/{page}', function($user, $page){
+//         return "{$user} {$page}";
+//     });
+// });
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -252,4 +264,66 @@ Route::get('/readcookie', function(){
     $cookie = Cookie::get('username');
     var_dump($cookie);
 });
+
+// Route::get('/i/like/shortcuts', ["as" => "shortcuts", 
+//     function(){
+//         return View::make('shortcuts');
+//     }
+// ]);
+
+// Route::get('/i/like/shortcuts', ["as" => "shortcuts", 
+//     function(){
+//         return Route::currentRouteName();
+//     }
+// ]);
+
+// Route::get('/redirectshortcuts', function(){
+//     return Redirect::route('shortcuts');
+// });
+
+Route::get('/first/shortcuts', [
+    "as" => "shortcuts",
+    "uses" => "FirstController@show"
+]);
+
+Route::get('/redirectshortcuts', function(){
+    return Redirect::route('shortcuts');
+});
+
+Route::get('/save/{name}', function($name){
+    return "My name is : {$name}";
+})->where('name', '[A-Za-z]+');
+
+Route::get('/save/{firstname}/{lastname}', function($firstname, $lastname){
+    return "My name is : {$firstname} {$lastname}";
+})->where('firstname', '[A-Za-z]+')->where('lastname', '[A-Za-z]+');
+
+// Route::group([], function(){
+//     Route::get('/critical', function(){
+//         return "Critical";
+//     });
+
+//     Route::get('/medical', function(){
+//         return "Medical";
+//     });
+    
+//     Route::get('/condition', function(){
+//         return "Condition";
+//     });
+// });
+
+Route::group(["prefix" => "books"], function(){
+    Route::get('/critical', function(){
+        return "Critical";
+    });
+
+    Route::get('/medical', function(){
+        return "Medical";
+    });
+
+    Route::get('/condition', function(){
+        return "Condition";
+    });
+});
+
 

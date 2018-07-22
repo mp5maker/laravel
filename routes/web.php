@@ -330,3 +330,5 @@ Route::group(['prefix' => "article"], function(){
     Route::get('/', 'ArticleController@index');
     Route::get('/new', 'ArticleController@new');
 });
+
+Route::resource('/testing', 'TestingController');

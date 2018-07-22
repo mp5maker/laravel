@@ -3,17 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Contracts\View\Factory as View;
 
 class TestingController extends Controller
 {
+    protected $view;
+
+    public function __construct(View $view){
+        $this->view = $view;    
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(View $view)
     {
-        //
+        return $view->make('child');
     }
 
     /**

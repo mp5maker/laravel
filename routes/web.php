@@ -332,3 +332,74 @@ Route::group(['prefix' => "article"], function(){
 });
 
 Route::resource('/testing', 'TestingController');
+
+// Route::get('/current/url', function(){
+//     return URL::current();
+// });
+
+Route::get('/current/url', function(){
+    return URL::full();
+});
+
+Route::get('/urlredirect', function(){
+    return Redirect::to('/showurl');
+});
+
+Route::get("/showurl", function(){
+    return URL::previous();
+});
+
+// Route::get('/urlto', function(){
+//     return URL::to('/anotherdimension');
+// });
+
+// Route::get('/urlto', function(){
+//     return URL::to('/anotherdimension', ['ok', 'no']);
+// });
+
+Route::get('/urlto', function(){
+    return URL::to('/anotherdimension', ['ok', 'no'], true);
+});
+
+
+Route::get('/strangeroute', function(){
+    return URL::secure('/secureroute', ['ok', 'secret']);
+});
+
+// Route::get('/superhero/shortcut', [
+//     'as' => 'superhero',
+//     function(){
+//         return "It is the superhero shortcut";
+//     }
+// ]);
+
+// Route::get('/redirectsuperhero', function(){
+    //     return URL::route('superhero');
+    // });
+
+Route::get('/hail/{first}/the/{second}', [
+    'as' => 'superhero',
+    function($first, $second){
+        return "It is the $first the $second";
+    }
+]);
+
+Route::get('/damnson', function(){
+    return URL::route('superhero', ['damn', 'son']);
+});
+
+Route::get('/triggercontroller', function(){
+    return URL::action('FirstController@show');
+});
+
+// Route::get('/asset', function(){
+//     return URL::asset('/img/book.png');
+// });
+
+// Route::get('/asset', function(){
+//     return URL::asset('/img/book.png', true);
+// });
+
+Route::get('/asset', function(){
+    return URL::secureAsset('/img/book.png', true);
+});

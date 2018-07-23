@@ -403,3 +403,38 @@ Route::get('/triggercontroller', function(){
 Route::get('/asset', function(){
     return URL::secureAsset('/img/book.png', true);
 });
+
+Route::get('/gamemodel', function(){
+    $game = new \App\Game;
+    $game->name = 'Assasins Creed';
+    $game->description = 'Assassins Vs Templars.';
+    $game->save();
+});
+
+Route::get('/readdata', function(){
+    $game = \App\Game::find('1');
+    return $game->name;
+});
+
+// Route::get('/readdata', function(){
+//     $game = new \App\Game;
+//     echo '<pre>';
+//     var_dump($game);
+// });
+
+Route::get('/updatedata', function(){
+    $game = \App\Game::find(2);
+    $game->name = "Alladin";
+    $game->description = "Too lazy to work";
+    $game->save();
+});
+
+Route::get('/deletedata', function(){
+    $game = \App\Game::find(2);
+    $game->delete();
+});
+
+Route::get('/destroydata', function(){
+    $game = new \App\Game;
+    $game->destroy([3,4,5]);
+});

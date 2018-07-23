@@ -438,3 +438,101 @@ Route::get('/destroydata', function(){
     $game = new \App\Game;
     $game->destroy([3,4,5]);
 });
+
+Route::get('/albumseeds', function(){
+    $album = new \App\Album;
+    $album->title =  'Some Made Hope';
+    $album->artist = 'Matt Nathanson';
+    $album->genre = 'Acoustic Rock';
+    $album->year = 2007;
+    $album->save();
+    
+    $album = new \App\Album;
+    $album->title =  'Please';
+    $album->artist = 'Matt Nathanson';
+    $album->genre = 'Acoustic Rock';
+    $album->year = 1993;
+    $album->save();
+    
+    $album = new \App\Album;
+    $album->title =  'Leaving through the window';
+    $album->artist = 'Something Corporate';
+    $album->genre = 'Piano Rock';
+    $album->year = 2002;
+    $album->save();
+    
+    $album = new \App\Album;
+    $album->title =  'North';
+    $album->artist = 'Something Corporate';
+    $album->genre = 'Piano Rock';
+    $album->year = 2002;
+    $album->save();
+    
+    $album = new \App\Album;
+    $album->title =  '...Anywhere But Here';
+    $album->artist = 'The Ataris';
+    $album->genre = 'Punk Rock';
+    $album->year = 1997;
+    $album->save();
+    
+    $album = new \App\Album;
+    $album->title =  '...Is a Real Boy';
+    $album->artist = 'Say Anything';
+    $album->genre = 'Indie Rock';
+    $album->year = 2006;
+    $album->save();
+});
+
+// Route::get('/readalbum', function(){
+//     $album = \App\Album::find(1);
+//     return $album->title;
+// });
+
+// Route::get('/readalbum', function(){
+//     $album = \App\Album::find(1);
+//     return $album;
+// });
+
+// Route::get('/readalbum', function(){
+//     $albums = \App\Album::all();
+//     foreach($albums as $album):
+//         echo $album->title."<br/>";
+//     endforeach;
+// });
+
+// Route::get('/readalbum', function(){
+//     $albums = \App\Album::find([1,3]);
+//     return $albums;
+// });
+
+// Route::get('/readalbum', function(){
+//     $albums = \App\Album::first();
+//     return $albums;
+// });
+
+Route::get('/updatealbum', function(){
+    \App\Album::where('artist', '=', 'Matt Nathanson')
+                ->update(['artist' => 'Photon Khan']);
+    return \App\Album::all();
+});
+
+Route::get('/deletealbum', function(){
+    \App\Album::where('title', '=', 'North')
+                ->delete();
+    return \App\Album::all();
+});
+
+// Route::get('/readalbum', function(){
+//     return \App\Album::where('title', '=', 'Please')
+//             ->get();
+// });
+
+// Route::get('/readalbum', function(){
+//     return \App\Album::where('title', '=', 'Please')
+//             ->get(['id', 'title', 'artist']);
+// });
+
+Route::get('/readalbum', function(){
+    return \App\Album::pluck('artist');
+});
+

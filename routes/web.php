@@ -536,3 +536,88 @@ Route::get('/readalbum', function(){
     return \App\Album::pluck('artist');
 });
 
+Route::get('/readquery', function(){
+    return \App\Album::where('artist', '=', 'Something Corportate')
+        ->toSql();
+});
+
+// Route::get('/queryconstraints', function(){
+//     return \App\Album::where('artist', '=', 'Photon Khan')->get();
+// });
+
+Route::get('/queryconstraints', function(){
+    return \App\Album::where('artist', '=', 'Photon Khan')->first();
+});
+
+Route::get('/likesearch', function(){
+    return \App\Album::where('title', 'LIKE', '...%')->get();
+});
+
+Route::get('/multiplewhere', function(){
+    return \App\Album::where('artist', '=', 'Photon Khan')
+                      ->where('genre', '=', 'Acoustic Rock')
+                      ->get();
+});
+
+Route::get('/orwhere', function(){
+    return \App\Album::where('artist', '=', 'Photon Khan')
+            ->orWhere('artist', '=', 'the Ataris')->get();
+});
+
+Route::get('/orwhere', function(){
+    return \App\Album::where('artist', '=', 'Photon Khan')
+            ->orWhere('artist', '=', 'the Ataris')->get();
+});
+
+Route::get('/whereraw', function(){
+    return \App\Album::whereRaw('artist = ? AND title LIKE ?', ['Say Anything', '...%'])->get();
+});
+
+Route::get('/wherebetween', function(){
+    return \App\Album::whereBetween('year', ['2000', '2010'])->get();
+});
+
+Route::get('/nestedwhere', function(){
+    return \App\Album::whereNested(function($query){
+        $query->where('year', '>', 2000);
+        $query->where('year', '<', 2035);
+    })->get();
+});
+
+Route::get('/wherein', function(){
+    $values = ['Photon Khan', 'The Ataris'];
+    return \App\Album::whereIn('artist', $values)->get();
+});
+
+Route::get('/wherenotin', function(){
+    $values = ['Photon Khan', 'The Ataris'];
+    return \App\Album::whereNotIn('artist', $values)->get();
+});
+
+Route::get('/wherenull', function(){
+    return \App\Album::whereNull('artist')->get();
+});
+
+Route::get('/wherenotnull', function(){
+    return \App\Album::whereNotNull('artist')->get();
+});
+
+Route::get('/orderby', function(){
+    return \App\Album::where('artist', '=', 'Photon Khan')->orderby('year')->get();
+});
+
+Route::get('/limitorderby', function(){
+    return \App\Album::where('artist', '=', 'Photon Khan')->orderby('year')->take(1)->get();
+});
+
+Route::get('/limitskip', function(){
+    return \App\Album::where('artist', '=', 'Photon Khan')->orderby('year')->take(2)->skip(1)->get();
+});
+
+Route::get('/magicquery', function(){
+    return \App\Album::whereArtist('Photon Khan')->get();
+});
+
+Route::get('/scopequery', function(){
+    return \App\Album::triplePeriod()->get();
+});

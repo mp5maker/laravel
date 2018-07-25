@@ -621,3 +621,134 @@ Route::get('/magicquery', function(){
 Route::get('/scopequery', function(){
     return \App\Album::triplePeriod()->get();
 });
+
+Route::get('/collection', function(){
+    return \App\Album::all();
+});
+
+Route::get('/firstcollection', function(){
+    $data = \App\Album::all();
+    return $data->first();
+});
+
+Route::get('/lastcollection', function(){
+    $data = \App\Album::all();
+    return $data->last();
+});
+
+Route::get('/shiftcollection', function(){
+    $data = \App\Album::all();
+    return $data->shift();
+});
+
+Route::get('/popcollection', function(){
+    $data = \App\Album::all();
+    return $data->pop();
+});
+
+Route::get('/eachcollection', function(){
+    $data = \App\Album::all();
+    $data->each(function($each_item){
+        echo $each_item->title."<br/>";
+    });
+});
+
+Route::get('mapcollection', function(){
+    $data = \App\Album::all();
+    $data = $data->map(function($each_data){
+                return "Great Albums ::".$each_data->title;
+            });
+    echo "<pre>";
+    var_dump($data);
+});
+
+Route::get('filtercollection', function(){
+    $data = \App\Album::all();
+    $data = $data->filter(function($each_data){
+                    if($each_data->artist == 'Something Corporate'):
+                        return true;
+                    endif;
+                });
+    echo "<pre>";
+    var_dump($data);
+});
+
+Route::get('sortcollection', function(){
+    $collection = \App\Album::all();
+    $collection = $collection->sort(function($a, $b){
+        $a = $a->year;
+        $b = $b->year;
+        if($a == $b):
+            return 0;
+        else:
+            return ($a > $b)? 1 : -1;
+        endif;
+    });
+    echo "<pre>";
+    $collection->each(function($album){
+        var_dump($album->year);
+    });
+});
+
+Route::get('/reversecollection', function(){
+    $collection = \App\Album::all();
+    echo "<pre>";
+    echo "Normal Loop <br/>";
+    $collection->each(function($each_data){
+        echo $each_data->title."<br/>";
+    });
+    echo "<br/><br/>";
+    echo "Reverse Loop <br/>";
+    $reverse = $collection->reverse();
+    $reverse->each(function($each_data){
+        echo $each_data->title."<br/>";
+    });
+});
+
+Route::get('/slicecollection', function(){
+    $collection = \App\Album::all();
+    $sliced_data = $collection->slice(2,4);
+    $sliced_data->each(function($each_data){
+        echo $each_data->title."</br/>";
+    });
+});
+
+Route::get('/mergecollection', function(){
+    $artist = \App\Album::whereArtist('Photon Khan')->get();
+    $title = \App\Album::whereTitle('Leaving through the window')->get();
+    $merged = $artist->merge($title);
+    $merged->each(function($each_data){
+        echo "Artist:: {$each_data->artist}   Title:: {$each_data->title}<br/>";
+    });
+});
+
+Route::get('/isemptycollection', function(){
+    $data = \App\Album::whereArtist('Boom')->get();
+    if($data->isEmpty()):
+        echo "Life is so empty";
+    endif;
+});
+
+Route::get('/toarraycollection', function(){
+    $data = \App\Album::all();
+    echo "<pre>";
+    var_dump($data->toArray());
+});
+
+Route::get('/tojsoncollection', function(){
+    $data = \App\Album::all();
+    echo "<pre>";
+    var_dump($data->toJson());
+});
+
+Route::get('/tojsoncollection', function(){
+    $data = \App\Album::all();
+    echo "<pre>";
+    var_dump($data->toJson());
+});
+
+Route::get('/countcollection', function(){
+    $data = \App\Album::all();
+    echo "<pre>";
+    echo $data->count();
+});

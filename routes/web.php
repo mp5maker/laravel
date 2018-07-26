@@ -752,3 +752,34 @@ Route::get('/countcollection', function(){
     echo "<pre>";
     echo $data->count();
 });
+
+Route::get('relationships', function(){
+    $author = new \App\Author;
+    $author->name = 'J.K Rowling';
+    $author->save();
+
+    $book = new \App\Book;
+    $book->name = "Harry Potter and the Sorcerer's Stone";
+    $book->author()->associate($author);
+    $book->save();
+
+    return "Successfully Added the Relationship";
+});
+
+Route::get('longrelation', function(){
+    $author = new \App\Author;
+    $author->name = "Dan Brown";
+    $author->save();
+
+    $book = new \App\Book;
+    $book->name = "Da Vinci Code";
+    $book->author()->associate($author);
+    $book->save();
+
+    $reader = new \App\Reader;
+    $reader->name = 'Photon Khan';
+    $reader->save();
+    $reader->books()->save($book);
+
+    return "Long Relation Addded";
+});

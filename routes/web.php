@@ -783,3 +783,92 @@ Route::get('longrelation', function(){
 
     return "Long Relation Addded";
 });
+
+Route::resource('/validationform', 'ValidationFormController');
+
+// Route::post('/registration', function(Request $request){
+//     $formData = $request::all();
+
+//     $rules = [
+//         // 'username' => 'alphanum'
+//         'username' => 'alpha_num|min:3'
+//     ];
+
+//     $validator = Validator::make($formData, $rules);
+//     if($validator->passes()):
+//         return 'Data was saved.';
+//     endif;
+
+//     if($validator->fails()):
+//         return redirect('/validationform');
+//     endif;
+// });
+
+// Route::post('/registration', function(Request $request){
+//     $formData = $request::all();
+//     $rules = [
+//         'username' => 'required|alpha_num|min:3|max:32',
+//         'email' => 'required|email',
+//         'password' => 'required|min:3',
+//         'password_confirmation' => 'required|min:3|same:password',
+//     ];
+//     $validator = Validator::make($formData, $rules);
+//     if($validator->passes()){
+//         return "Validator Passed";
+//     }
+//     if($validator->fails()){
+//         // $errors = $validator->messages();
+//         return Redirect::to('/validationform')->withErrors($validator);
+//     }
+// });
+
+// Validator::extend('awesome', function($field, $value, $params){
+//     return $value == 'awesome';
+// });
+
+// Validator::extend('awesome', 'App\Validators\CustomValidation@awesome');
+
+// Route::post('/registration', function(Request $request){
+    //     $formData = $request::all();
+    //     $rules = [
+        //         'username' => 'required|alpha_num|min:3|max:32|awesome',
+        //         'email' => 'required|email',
+        //         'password' => 'required|min:3',
+        //         'password_confirmation' => 'required|min:3|same:password',
+        //     ];
+        //     $validator = Validator::make($formData, $rules);
+        //     if($validator->passes()){
+            //         return "Validator Passed";
+            //     }
+            //     if($validator->fails()){
+                //         // $errors = $validator->messages();
+                //         return Redirect::to('/validationform')->withErrors($validator);
+                //     }
+                // });
+                
+Validator::extend('awesome', 'App\Validators\CustomValidation@awesome');
+Route::post('/registration', function(Request $request){
+    $formData = $request::all();
+    $rules = [
+        'username' => 'required|alpha_num|min:3|max:32|awesome',
+        'email' => 'required|email',
+        'password' => 'required|min:3',
+        'password_confirmation' => 'required|min:3|same:password',
+    ];
+
+    $messages = [
+        'username.min' => "Nice try Bro!",
+        'min' => 'Yo dawg, you need more to write!',
+        'required' => 'Bro, are you kidding me?'
+    ];
+
+    $validator = Validator::make($formData, $rules, $messages);
+    if($validator->passes()){
+        return "Validator Passed";
+    }
+    if($validator->fails()){
+        // $errors = $validator->messages();
+        return Redirect::to('/validationform')->withErrors($validator);
+    }
+});
+

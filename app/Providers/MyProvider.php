@@ -26,5 +26,7 @@ class MyProvider extends ServiceProvider
         $this->app->router->get('/providerservice', function(){
             return "Simple Provider Service Test";
         });
+
+        // $this->app->router->get('/deferredprovider', 'App\Http\Controllers\InjectFromController@read');
     }
 }

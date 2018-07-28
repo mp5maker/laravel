@@ -937,3 +937,5 @@ $parafunction = function(){
     echo "Parametric Middleware Pass through!";
 };
 Route::get('/middlepara', $parafunction)->middleware('mine:hello,true');
+
+Route::get('/deferredprovider', 'InjectFromController@read');

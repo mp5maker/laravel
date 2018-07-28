@@ -963,3 +963,60 @@ App::instance('bindingone', $app);
 Route::get('/bindingone', function(){
     return App::make('bindingone');
 });
+
+Route::get('/sessioncheck', function(){
+    Session::put('name', 'Taylor Swift');
+    return Session::get('name');
+});
+
+Route::get('/sessionarray', function(){
+    Session::push('user.names', 'Shabuktagin Photon Khan');
+    Session::push('user.names', 'Samith Zaman');
+    Session::push('user.names', 'Rizwan Mannan');
+    if(Session::has('user.names')):
+        $sesionNames = Session::get('names');
+        $sessionData = Session::all();
+        echo "<pre>";
+        var_dump($sessionData);
+    endif;
+});
+
+Route::get('/forgetsession', function(){
+    echo "<pre>";
+    Session::forget('user.names');
+    var_dump(Session::all());
+});
+
+Route::get('/flashsession', function(){
+    Session::flash('alert', 'Resource Created');
+    echo "<pre>";
+    var_dump(Session::get('alert'));
+});
+
+Route::get('/reflashsession', function(){
+    Session::reflash('alert', 'Resource Created');
+    echo "<pre>";
+    var_dump(Session::get('alert'));
+});
+
+Route::get('/keepsession', function(){
+    Session::keep(['name']);
+    echo "<pre>";
+    var_dump(Session::get('name'));
+});
+
+Route::get('/altsession', function(){
+    session([
+        'username' => 'Photon Khan',
+        'email' => 'khan.photon@gmail.com'
+    ]);
+    var_dump(session('username'));
+});
+
+Route::get('/pullsession', function(){
+    Session::put('jam', 'yellow');
+    $jam = Session::pull('jam');
+    $jam2 = Session::get('jam');
+    echo "<pre>";
+    var_dump($jam, $jam2);
+});

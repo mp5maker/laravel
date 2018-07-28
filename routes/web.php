@@ -926,3 +926,14 @@ Route::get('/eventsubscriber', function(){
     Event::fire('second.event', "Firing Two");
 });
 
+Route::get('/sendrequest', function(){
+    return View::make('sendrequest');
+});
+Route::resource('/error404', '\App\Http\Controllers\ErrorController');
+Route::resource('/middlewarefirst', '\App\Http\Controllers\MiddlewareTestController')
+       ->middleware('firstmiddleware');
+
+$parafunction = function(){
+    echo "Parametric Middleware Pass through!";
+};
+Route::get('/middlepara', $parafunction)->middleware('mine:hello,true');

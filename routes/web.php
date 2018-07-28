@@ -872,3 +872,57 @@ Route::post('/registration', function(Request $request){
     }
 });
 
+Route::get('/events', function(){
+    return event(new \App\Events\ActionDone(5,3));
+});
+
+// Route::get('/eventnonclass', function(){
+//     $first = 4;
+//     $second = 7;
+//     return Event::fire('boom', [$first, $second]);
+// });
+
+// Event::listen('boom', function($first, $second){
+//     if($first > $second){
+//         return "{$first} is greater than {$second}";
+//     }else{
+//         return "{$second} is greater than {$first}";
+//     }
+// });
+
+Route::get('/eventnonclass', function(){
+    $first = 4;
+    $second = 7;
+    return Event::fire('boom', [$first, $second]);
+});
+
+Event::listen('boom', function($first, $second){
+    if($first > $second){
+        return "{$first} is greater than {$second}";
+    }else{
+        return "{$second} is greater than {$first}";
+    }
+}, 1);
+
+Event::listen('boom', function($first, $second){
+    if($first > $second){
+        return "{$first} is the best";
+    }else{
+        return "{$second} is the best";
+    }
+}, 3);
+
+Event::listen('boom', function($first, $second){
+    if($first > $second){
+        return "{$first} is powerful";
+    }else{
+        return "{$second} is powerful";
+    }
+}, 5);
+
+Event::subscribe(new \App\Listeners\MyListener);
+Route::get('/eventsubscriber', function(){
+    Event::fire('first.event', "Firing One");
+    Event::fire('second.event', "Firing Two");
+});
+

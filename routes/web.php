@@ -939,3 +939,27 @@ $parafunction = function(){
 Route::get('/middlepara', $parafunction)->middleware('mine:hello,true');
 
 Route::get('/deferredprovider', 'InjectFromController@read');
+
+// App::bind('bindingone', function(){
+//    return new \App\Http\Controllers\BindingController;
+// });
+
+// Route::get('/bindingone', function(){
+    //     echo App::make('bindingone');
+// });
+
+// App::singleton('bindingone', function(){
+//    return new \App\Http\Controllers\BindingController;
+// });
+
+// Route::get('/bindingone', function(){
+//     $app1 = App::make('bindingone');
+//     $app2 = App::make('bindingone');
+//     return $app1;
+// });
+
+$app = new \App\Http\Controllers\BindingController;
+App::instance('bindingone', $app);
+Route::get('/bindingone', function(){
+    return App::make('bindingone');
+});

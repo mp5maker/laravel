@@ -29,7 +29,7 @@ class InjectionServiceProvider extends ServiceProvider
         });
     }
 
-    public function provider(){
+    public function provides(){
         return [\App\Http\Controllers\InjectToController::class];
     }
 }

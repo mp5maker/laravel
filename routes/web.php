@@ -1020,3 +1020,5 @@ Route::get('/pullsession', function(){
     echo "<pre>";
     var_dump($jam, $jam2);
 });
+
+Route::get('/caching', 'CacheController@index');
